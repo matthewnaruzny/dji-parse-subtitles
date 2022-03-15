@@ -41,11 +41,11 @@ for line in subfile.readlines():
         gps2 = dataline[7][1:len(dataline[7])-1]
         distance = dataline[8][3:len(dataline[8])-1]
         height = dataline[9][3:len(dataline[9])-1]
-        hs = dataline[10][3:len(dataline[10])-3]
-        vs = dataline[11][3:len(dataline[11])-3]
+        hs = dataline[10][4:len(dataline[10])-3]
+        vs = dataline[11][4:len(dataline[11])-5]
 
         dataprint = (str(fs) + ',' + str(iso) + ',' + str(ev) + ',' + str(gps0) + ',' + str(gps1) + ',' + str(gps2) +
-                     ',' + str(distance) + ',' + str(height))
+                     ',' + str(distance) + ',' + str(height) + ',' + str(hs) + ',' + str(vs))
         data.write(dataprint)
         data.write('\n')
         print('------')
