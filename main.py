@@ -1,10 +1,24 @@
-import os
 import sys
+import os
+import subprocess
+import simplekml
 
-#fname = input("Subtitle File Name")
-fname = 'subs0226.txt'
-subfile = open(fname, "r")
-data = open('output.csv', "w")
+ffmpeg = "/usr/local/bin/ffmpeg"
+
+# Replace Below with Filename
+filename = 'DJI_0232.MP4'
+
+titlename = filename.split('.')[0]
+
+# Extract Subtitle Track from MP4
+mstatus = subprocess.run("ffmpeg -i " + filename + " -map 0:s:0 " + titlename + ".srt").returncode
+if mstatus != 0:
+    print("Failed to extract subtitles. Check filename and ffmpeg installation.")
+    sys.exit()
+
+subfile = open((titlename + '.srt'), "r")
+data = open((titlename + '.csv'), "w")
+kml = simplekml.Kml()
 
 lc = 0
 process = -1
@@ -48,10 +62,16 @@ for line in subfile.readlines():
                      ',' + str(distance) + ',' + str(height) + ',' + str(hs) + ',' + str(vs))
         data.write(dataprint)
         data.write('\n')
+        kml.newpoint(description=lc,
+                     coords=[(gps0, gps1, gps2)])
         print('------')
         process = -1
         continue
 
 
+data.close()
+subfile.close()
+kml.save(titlename + '.kml')
 
-
+# Clean up extra files
+os.remove(titlename + '.srt')

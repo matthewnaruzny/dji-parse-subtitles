@@ -286,4 +286,9 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+*.srt
+*.csv
+*.kml
+*.mp4
+
 # End of https://www.toptal.com/developers/gitignore/api/pycharm+all,python,windows,virtualenv,venv
