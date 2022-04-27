@@ -47,9 +47,9 @@ for line in subfile.readlines():
         # Dataline
         dataline = line.split(',')
         print(dataline)
-        fs = dataline[0][2:5]
-        iso = dataline[2][5:8]
-        ev = dataline[3][4]
+        fs = dataline[0][2:len(dataline[0])]
+        iso = dataline[2][5:len(dataline[2])]
+        ev = dataline[3][4:len(dataline[3])]
         gps0 = dataline[5][6:len(dataline[5])]
         gps1 = dataline[6][1:len(dataline[6])]
         gps2 = dataline[7][1:len(dataline[7])-1]
