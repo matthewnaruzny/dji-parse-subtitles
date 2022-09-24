@@ -44,11 +44,8 @@ def write_csv(filename):
             continue
 
         if process == 1:
-            print('------')
-            print("DATALINE")
             # Dataline
             dataline = line.split(',')
-            print(dataline)
             fs = dataline[0][2:len(dataline[0])]
             iso = dataline[2][5:len(dataline[2])]
             ev = dataline[3][4:len(dataline[3])]
@@ -66,7 +63,6 @@ def write_csv(filename):
             csvdata.write(dataprint)
             csvdata.write('\n')
 
-            print('------')
             process = -1
             continue
 
@@ -97,17 +93,21 @@ def clean(filename):
     os.remove(titlename + '.srt')
 
 
+# Generate CSV by default.
+
 parser = argparse.ArgumentParser()
 parser.add_argument("filename", help="Drone video filename")
-parser.add_argument("-s", "--subtitle_only", help="Only extract subtitle file", action="store_true")
-parser.add_argument("-k", help="Keep subtitle file", action="store_true")
+parser.add_argument("-s", help="Keep Subtitle File", action="store_true")
+parser.add_argument("-k", help="Generate KML", action="store_true")
 args = parser.parse_args()
 
 input_filename = args.filename
 
 extract_subtitle(input_filename)
-if not args.subtitle_only:
-    write_csv(input_filename)
+write_csv(input_filename)
+if args.k:
     write_kml(input_filename)
-    if not args.k:
-        clean(input_filename)
+if not args.s:
+    clean(input_filename)
+
+print("\n\n--Done--")
